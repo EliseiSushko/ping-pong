@@ -1,5 +1,4 @@
 from pygame import *
-
 from random import randint
 
 win_width = 700
