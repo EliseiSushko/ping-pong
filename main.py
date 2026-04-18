@@ -30,23 +30,28 @@ class GameSprite(sprite.Sprite):
 class Player(GameSprite):
     def update_r(self):
         keys = key.get_pressed()
-        if keys[K_UP] and self.rect.x > 5:
+        if keys[K_UP] and self.rect.y > 5:
            self.rect.y -= self.speed
-        if keys[K_DOWN] and self.rect.x < win_width - 80:
+        if keys[K_DOWN] and self.rect.y < win_height - 100:
            self.rect.y += self.speed
 
     def update_l(self):
         keys = key.get_pressed()
-        if keys[K_w] and self.rect.x > 5:
+        if keys[K_w] and self.rect.y > 5:
            self.rect.y -= self.speed
-        if keys[K_s] and self.rect.x < win_width - 80:
+        if keys[K_s] and self.rect.y < win_height - 100:
            self.rect.y += self.speed
+
+font.init()
+font = font.Font(None,35)
+lose1 = font.render('player1 lost', True,(180,0,0))
+lose2 = font.render('player2 lost', True,(180,0,0))
 
 game = True
 finish = False
 ball = GameSprite('ball.png', 325, 200, 4, 50 ,50)
-Rocket = Player('Rocket.png', 50, 200, 4, 50, 100)
-Rocket1 = Player('Rocket.png', 600, 200, 4, 50, 100)
+Rocket = Player('Rocket.png', 50, 200, 6, 50, 100)
+Rocket1 = Player('Rocket.png', 600, 200, 6, 50, 100)
 
 while game:
 
@@ -79,6 +84,17 @@ while game:
         if ball.rect.y > win_height-50 or ball.rect.y < 0:
 
             speed_y *= -1
+
+        if ball.rect.x > win_width-50 :
+            window.blit(lose2,(300,120))
+
+            finish = True
+        if ball.rect.x < 0:
+            window.blit(lose1,(300,120))
+
+            finish = True
+
+
         display.update()
 
         time.delay(25)
