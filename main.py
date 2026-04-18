@@ -9,6 +9,9 @@ window = display.set_mode((700,500))
 display.set_caption('Пинг понг')
 window.fill((216, 219, 124))
 
+speed_x = 3
+speed_y = 3
+
 
 
 class GameSprite(sprite.Sprite):
@@ -44,6 +47,7 @@ finish = False
 ball = GameSprite('ball.png', 325, 200, 4, 50 ,50)
 Rocket = Player('Rocket.png', 50, 200, 4, 50, 100)
 Rocket1 = Player('Rocket.png', 600, 200, 4, 50, 100)
+
 while game:
 
     
@@ -55,6 +59,7 @@ while game:
         
     if finish != True:
 
+
         window.fill((216, 219, 124))
 
         ball.update()
@@ -64,6 +69,16 @@ while game:
         Rocket1.update_r()
         Rocket1.reset()
         
+        ball.rect.x += speed_x
+        ball.rect.y += speed_y
+
+        if sprite.collide_rect(Rocket, ball) or sprite.collide_rect(Rocket1, ball):
+
+            speed_x *= -1
+
+        if ball.rect.y > win_height-50 or ball.rect.y < 0:
+
+            speed_y *= -1
         display.update()
 
         time.delay(25)
